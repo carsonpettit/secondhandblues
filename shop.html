@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Second Hand Blues</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Archivo+Narrow:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
+    
+    <!-- Shopify Buy Button SDK -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    
+    <style>
+        :root {
+            --midnight: #0a0e27;
+            --deep-blue: #1a2456;
+            --electric-blue: #4a90e2;
+            --rust: #d4634a;
+            --cream: #f5f1e8;
+            --silver: #c5c7d0;
+            --shadow: rgba(10, 14, 39, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Archivo Narrow', sans-serif;
+            background: white;
+            color: var(--deep-blue);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            padding: 2rem 4%;
+            border-bottom: 2px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h1 {
+            font-family: 'Allura', cursive;
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--deep-blue);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 a {
+            text-decoration: none;
+            color: var(--deep-blue);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--deep-blue);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--electric-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--electric-blue);
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            color: var(--electric-blue);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .page-header-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .page-header-content {
+            padding: 4rem 4%;
+            background: white;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+            color: var(--deep-blue);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--deep-blue);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 4rem 4%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--deep-blue);
+        }
+
+        #shopify-products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Shopify component styling overrides */
+        .shopify-buy__product {
+            background: var(--deep-blue) !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            border: 1px solid rgba(74, 144, 226, 0.2) !important;
+            padding: 0 !important;
+        }
+
+        .shopify-buy__product:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: 0 12px 40px var(--shadow) !important;
+            border-color: var(--electric-blue) !important;
+        }
+
+        .shopify-buy__product__variant-img {
+            border-radius: 0 !important;
+        }
+
+        .shopify-buy__product__title {
+            font-family: 'Playfair Display', serif !important;
+            font-size: 1.3rem !important;
+            font-weight: 700 !important;
+            color: var(--cream) !important;
+        }
+
+        .shopify-buy__product__price {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            color: var(--electric-blue) !important;
+        }
+
+        .shopify-buy__btn {
+            background: var(--rust) !important;
+            color: var(--cream) !important;
+            font-family: 'Archivo Narrow', sans-serif !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            font-weight: 600 !important;
+            border-radius: 4px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .shopify-buy__btn:hover {
+            background: var(--electric-blue) !important;
+            transform: scale(1.05) !important;
+        }
+
+        .shopify-buy__cart-toggle {
+            background: var(--electric-blue) !important;
+            border-radius: 4px !important;
+        }
+
+        .shopify-buy__cart-toggle:hover {
+            background: var(--rust) !important;
+        }
+
+        /* Setup Instructions */
+        .setup-instructions {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: var(--deep-blue);
+            border-radius: 12px;
+            border: 2px solid var(--electric-blue);
+        }
+
+        .setup-instructions h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--electric-blue);
+        }
+
+        .setup-instructions ol {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .setup-instructions li {
+            margin-bottom: 1rem;
+            color: var(--silver);
+        }
+
+        .setup-instructions code {
+            background: var(--midnight);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--electric-blue);
+            font-family: monospace;
+        }
+
+        .setup-instructions strong {
+            color: var(--cream);
+        }
+
+        .setup-instructions a {
+            color: var(--electric-blue);
+            text-decoration: none;
+            border-bottom: 1px solid var(--electric-blue);
+        }
+
+        .setup-instructions a:hover {
+            color: var(--rust);
+            border-bottom-color: var(--rust);
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--silver);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--deep-blue);
+            border-top-color: var(--electric-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 4%;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+            color: var(--deep-blue);
+            margin-top: 4rem;
+            background: white;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--electric-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--rust);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .page-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .page-header-image {
+                height: 300px;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            nav {
+                gap: 1rem;
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 1rem;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            #shopify-products-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .setup-instructions {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1><a href="index.html">Second Hand Blues</a></h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html" class="active">Shop</a></li>
+                    <li><a href="bundles.html">Custom Bundles</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <!-- Shopify cart will be inserted here -->
+                <div id="shopify-cart"></div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="page-header-image">
+            <img src="clothing-rack.jpg" alt="Vintage Clothing Collection">
+        </div>
+        <div class="page-header-content">
+            <h2>Shop My Collection</h2>
+            <p>The solution to my shopping problem.</p>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <section class="products-section" id="shop-products">
+        <div id='collection-component-1775581655285'></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Second Hand Blues. Vintage. Alternative. Yours.</p>
+        <p>
+            Follow us on 
+            <a href="https://www.depop.com/secondhandblues/" target="_blank">Depop @secondhandblues</a>
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+/*<![CDATA[*/
+(function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'x3thui-yk.myshopify.com',
+      storefrontAccessToken: '9dec90d1e19b88e9e4af5b29481d0b41',
+    });
+    ShopifyBuy.UI.onReady(client).then(function (ui) {
+      ui.createComponent('collection', {
+        id: '353229602970',
+        node: document.getElementById('collection-component-1775581655285'),
+        moneyFormat: '%24%7B%7Bamount%7D%7D',
+        options: {
+  "product": {
+    "styles": {
+      "product": {
+        "@media (min-width: 601px)": {
+          "max-width": "calc(25% - 20px)",
+          "margin-left": "20px",
+          "margin-bottom": "50px",
+          "width": "calc(25% - 20px)"
+        },
+        "img": {
+          "height": "calc(100% - 15px)",
+          "position": "absolute",
+          "left": "0",
+          "right": "0",
+          "top": "0"
+        },
+        "imgWrapper": {
+          "padding-top": "calc(75% + 15px)",
+          "position": "relative",
+          "height": "0"
+        }
+      },
+      "button": {
+        ":hover": {
+          "background-color": "#d4634a"
+        },
+        "background-color": "#1a2456",
+        ":focus": {
+          "background-color": "#d4634a"
+        },
+        "border-radius": "12px",
+        "padding-left": "23px",
+        "padding-right": "23px"
+      }
+    },
+    "contents": {
+      "img": false,
+      "button": false,
+      "buttonWithQuantity": false,
+      "title": false,
+      "price": false
+    },
+    "text": {
+      "button": "View Details"
+    }
+  },
+  "productSet": {
+    "styles": {
+      "products": {
+        "@media (min-width: 601px)": {
+          "margin-left": "-20px"
+        }
+      }
+    }
+  },
+  "modalProduct": {
+    "contents": {
+      "img": false,
+      "imgWithCarousel": true,
+      "button": false,
+      "buttonWithQuantity": true
+    },
+    "styles": {
+      "product": {
+        "@media (min-width: 601px)": {
+          "max-width": "100%",
+          "margin-left": "0px",
+          "margin-bottom": "0px"
+        }
+      },
+      "button": {
+        ":hover": {
+          "background-color": "#d4634a"
+        },
+        "background-color": "#1a2456",
+        ":focus": {
+          "background-color": "#d4634a"
+        },
+        "border-radius": "12px",
+        "padding-left": "23px",
+        "padding-right": "23px"
+      }
+    },
+    "text": {
+      "button": "Add to cart"
+    }
+  },
+  "option": {},
+  "cart": {
+    "styles": {
+      "button": {
+        ":hover": {
+          "background-color": "#d4634a"
+        },
+        "background-color": "#1a2456",
+        ":focus": {
+          "background-color": "#d4634a"
+        },
+        "border-radius": "12px"
+      }
+    },
+    "text": {
+      "total": "Subtotal",
+      "button": "Checkout"
+    }
+  },
+  "toggle": {
+    "styles": {
+      "toggle": {
+        "background-color": "#1a2456",
+        ":hover": {
+          "background-color": "#d4634a"
+        },
+        ":focus": {
+          "background-color": "#d4634a"
+        }
+      }
+    }
+  }
+},
+      });
+    });
+  }
+})();
+/*]]>*/
+</script>
+</body>
+</html>

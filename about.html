@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Second Hand Blues</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Archivo+Narrow:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --midnight: #0a0e27;
+            --deep-blue: #1a2456;
+            --electric-blue: #4a90e2;
+            --rust: #d4634a;
+            --cream: #f5f1e8;
+            --silver: #c5c7d0;
+            --shadow: rgba(10, 14, 39, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Archivo Narrow', sans-serif;
+            background: white;
+            color: var(--deep-blue);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            padding: 2rem 4%;
+            border-bottom: 2px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h1 {
+            font-family: 'Allura', cursive;
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--deep-blue);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 a {
+            text-decoration: none;
+            color: var(--deep-blue);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--deep-blue);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--electric-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--electric-blue);
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            color: var(--electric-blue);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 4rem 4%;
+            text-align: center;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+            color: var(--deep-blue);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--deep-blue);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .about-description {
+            max-width: 800px;
+            margin: 2rem auto 0;
+            line-height: 1.8;
+            font-size: 1.3rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 4rem 4%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .find-me-section {
+            background: #f5f5f5;
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .find-me-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-blue);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .find-me-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .flea-markets h4,
+        .depop-section h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--deep-blue);
+            margin-bottom: 1rem;
+        }
+
+        .flea-markets p {
+            color: var(--deep-blue);
+            margin-bottom: 1rem;
+        }
+
+        .flea-markets ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .flea-markets li {
+            color: var(--deep-blue);
+            padding: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .view-depop-btn {
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            background: var(--deep-blue);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .view-depop-btn:hover {
+            background: var(--electric-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+        }
+
+        /* Depop Modal */
+        .depop-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 2001;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .depop-modal.open {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .depop-modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .depop-modal h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-blue);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .depop-modal iframe {
+            flex: 1;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--deep-blue);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--rust);
+        }
+
+        .open-app-btn {
+            display: block;
+            text-align: center;
+            padding: 1rem;
+            background: var(--electric-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .open-app-btn:hover {
+            background: var(--rust);
+            transform: scale(1.02);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .about-content {
+            background: #f5f5f5;
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .about-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--deep-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .value-card {
+            background: #f5f5f5;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .value-card:nth-child(1) { animation-delay: 0.6s; }
+        .value-card:nth-child(2) { animation-delay: 0.7s; }
+        .value-card:nth-child(3) { animation-delay: 0.8s; }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--electric-blue);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-blue);
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: var(--deep-blue);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: #f5f5f5;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            animation: fadeInUp 0.8s ease-out 0.9s both;
+        }
+
+        .cta-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--deep-blue);
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: var(--deep-blue);
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .depop-link,
+        .shop-link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .depop-link {
+            background: var(--electric-blue);
+            color: var(--cream);
+        }
+
+        .depop-link:hover {
+            background: var(--rust);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(212, 99, 74, 0.4);
+        }
+
+        .shop-link {
+            background: transparent;
+            color: var(--electric-blue);
+            border: 2px solid var(--electric-blue);
+        }
+
+        .shop-link:hover {
+            background: var(--electric-blue);
+            color: var(--midnight);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 4%;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+            color: var(--deep-blue);
+            margin-top: 4rem;
+            background: white;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--electric-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--rust);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .page-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            nav {
+                gap: 1rem;
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .about-content {
+                padding: 2rem;
+            }
+
+            .find-me-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .depop-modal {
+                width: 95%;
+                height: 90vh;
+            }
+
+            .depop-modal-content {
+                padding: 1.5rem;
+            }
+
+            .about-content p {
+                font-size: 1.1rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1><a href="index.html">Second Hand Blues</a></h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="bundles.html">Custom Bundles</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h2>Second Hand Blues</h2>
+        <p class="about-description">Second Hand Blues is your hub for sustainable shopping. I curate clothing from all eras - making each piece uniquely yours. Shop the available collection or create a custom style bundle inspired by your wishlist.</p>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="find-me-section">
+            <h3>Where to Find Me:</h3>
+            <div class="find-me-content">
+                <div class="flea-markets">
+                    <h4>Flea Markets</h4>
+                    <p><strong>Upcoming: JMU Flea on the Union Patio</strong></p>
+                    <ul>
+                        <li>April 18th</li>
+                        <li>April 24th</li>
+                        <li>May 8th</li>
+                    </ul>
+                </div>
+                <div class="depop-section">
+                    <h4>Depop: @secondhandblues</h4>
+                    <button class="view-depop-btn" id="viewDepopBtn">View My Depop Shop</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depop Modal -->
+    <div class="depop-modal" id="depopModal">
+        <div class="depop-modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h3>@secondhandblues on Depop</h3>
+            <iframe src="https://www.depop.com/secondhandblues/" title="Second Hand Blues Depop Shop"></iframe>
+            <a href="https://www.depop.com/secondhandblues/" target="_blank" class="open-app-btn">Open in Depop App</a>
+        </div>
+    </div>
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Second Hand Blues. Vintage. Alternative. Yours.</p>
+        <p>
+            Follow us on 
+            <a href="https://www.depop.com/secondhandblues/" target="_blank">Depop @secondhandblues</a>
+        </p>
+    </footer>
+
+    <script>
+        // Depop Modal functionality
+        const viewDepopBtn = document.getElementById('viewDepopBtn');
+        const depopModal = document.getElementById('depopModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+
+        // Open modal
+        viewDepopBtn.addEventListener('click', () => {
+            depopModal.classList.add('open');
+            modalOverlay.classList.add('open');
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            depopModal.classList.remove('open');
+            modalOverlay.classList.remove('open');
+        });
+
+        // Close modal when clicking overlay
+        modalOverlay.addEventListener('click', () => {
+            depopModal.classList.remove('open');
+            modalOverlay.classList.remove('open');
+        });
+    </script>
+</body>
+</html>
