@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Second Hand Blues</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Archivo+Narrow:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --deep-blue: #1a2456;
+            --electric-blue: #4a90e2;
+            --rust: #d4634a;
+            --cream: #fef9f3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Archivo Narrow', sans-serif;
+            background: white;
+            color: var(--deep-blue);
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1.5rem 4%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h1 {
+            font-family: 'Allura', cursive;
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--deep-blue);
+        }
+
+        h1 a {
+            text-decoration: none;
+            color: var(--deep-blue);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--deep-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--electric-blue);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 4rem 4%;
+            text-align: center;
+            background: white;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--deep-blue);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--deep-blue);
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 2rem 4% 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-blue);
+            color: white;
+            text-align: center;
+            padding: 2rem 4%;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer a {
+            color: var(--electric-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--rust);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .page-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            nav {
+                gap: 1rem;
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1><a href="index.html">Second Hand Blues</a></h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html" class="active">Shop</a></li>
+                    <li><a href="bundles.html">Custom Bundles</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h2>Shop My Collection</h2>
+        <p>Curated vintage finds, handpicked just for you</p>
+    </div>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div id='collection-component-1775588108670'></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Second Hand Blues. Vintage. Alternative. Yours.</p>
+        <p>
+            Follow us on 
+            <a href="https://www.depop.com/secondhandblues/" target="_blank">Depop @secondhandblues</a>
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    /*<![CDATA[*/
+    (function () {
+      var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+      if (window.ShopifyBuy) {
+        if (window.ShopifyBuy.UI) {
+          ShopifyBuyInit();
+        } else {
+          loadScript();
+        }
+      } else {
+        loadScript();
+      }
+      function loadScript() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = scriptURL;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+        script.onload = ShopifyBuyInit;
+      }
+      function ShopifyBuyInit() {
+        var client = ShopifyBuy.buildClient({
+          domain: 'x3thui-yk.myshopify.com',
+          storefrontAccessToken: '9dec90d1e19b88e9e4af5b29481d0b41',
+        });
+        ShopifyBuy.UI.onReady(client).then(function (ui) {
+          ui.createComponent('collection', {
+            id: '357369282714',
+            node: document.getElementById('collection-component-1775588108670'),
+            moneyFormat: '%24%7B%7Bamount%7D%7D',
+            options: {
+      "product": {
+        "styles": {
+          "product": {
+            "@media (min-width: 601px)": {
+              "max-width": "calc(25% - 20px)",
+              "margin-left": "20px",
+              "margin-bottom": "50px",
+              "width": "calc(25% - 20px)"
+            },
+            "img": {
+              "height": "calc(100% - 15px)",
+              "position": "absolute",
+              "left": "0",
+              "right": "0",
+              "top": "0"
+            },
+            "imgWrapper": {
+              "padding-top": "calc(75% + 15px)",
+              "position": "relative",
+              "height": "0"
+            }
+          },
+          "button": {
+            ":hover": {
+              "background-color": "#d4634a"
+            },
+            "background-color": "#1a2456",
+            ":focus": {
+              "background-color": "#d4634a"
+            },
+            "border-radius": "12px",
+            "padding-left": "23px",
+            "padding-right": "23px"
+          }
+        },
+        "text": {
+          "button": "Add to cart"
+        }
+      },
+      "productSet": {
+        "styles": {
+          "products": {
+            "@media (min-width: 601px)": {
+              "margin-left": "-20px"
+            }
+          }
+        }
+      },
+      "modalProduct": {
+        "contents": {
+          "img": false,
+          "imgWithCarousel": true,
+          "button": false,
+          "buttonWithQuantity": true
+        },
+        "styles": {
+          "product": {
+            "@media (min-width: 601px)": {
+              "max-width": "100%",
+              "margin-left": "0px",
+              "margin-bottom": "0px"
+            }
+          },
+          "button": {
+            ":hover": {
+              "background-color": "#d4634a"
+            },
+            "background-color": "#1a2456",
+            ":focus": {
+              "background-color": "#d4634a"
+            },
+            "border-radius": "12px",
+            "padding-left": "23px",
+            "padding-right": "23px"
+          }
+        },
+        "text": {
+          "button": "Add to cart"
+        }
+      },
+      "option": {},
+      "cart": {
+        "styles": {
+          "button": {
+            ":hover": {
+              "background-color": "#d4634a"
+            },
+            "background-color": "#1a2456",
+            ":focus": {
+              "background-color": "#d4634a"
+            },
+            "border-radius": "12px"
+          }
+        },
+        "text": {
+          "total": "Subtotal",
+          "button": "Checkout"
+        }
+      },
+      "toggle": {
+        "styles": {
+          "toggle": {
+            "background-color": "#1a2456",
+            ":hover": {
+              "background-color": "#d4634a"
+            },
+            ":focus": {
+              "background-color": "#d4634a"
+            }
+          }
+        }
+      }
+    }
+          });
+        });
+      }
+    })();
+    /*]]>*/
+    </script>
+</body>
+</html>
