@@ -44,7 +44,7 @@
         /* Header */
         header {
             position: relative;
-            padding: 2rem 4%;
+            padding: 2rem 2rem;
             border-bottom: 2px solid #e0e0e0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
@@ -158,17 +158,19 @@
 
         /* Hero Section */
         .hero {
-            padding: 8rem 4%;
+            padding: 0;
+            margin: 0;
             text-align: center;
             position: relative;
             overflow: hidden;
-            min-height: 80vh;
+            min-height: 100vh;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             background-image: url('clothing-rack.jpg');
             background-size: cover;
-            background-position: center;
+            background-position: center bottom;
             background-repeat: no-repeat;
         }
 
@@ -186,8 +188,9 @@
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
+            width: 100%;
+            margin: 0;
+            padding: 2rem;
         }
 
         .hero-content *,
@@ -288,7 +291,8 @@
         /* CTA Scroll Section */
         .cta-scroll-section {
             background: white;
-            padding: 6rem 4%;
+            padding: 4rem 2rem;
+            margin: 0;
             text-align: center;
             color: var(--deep-blue);
             position: relative;
@@ -322,23 +326,28 @@
         }
 
         .social-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--deep-blue);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            border: 2px solid var(--electric-blue);
-        }
-
-        .social-icon.depop-icon {
-            background: transparent;
-            border: none;
+            transition: transform 0.3s ease;
+            display: inline-flex;
         }
 
         .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .icon-circle:hover {
+            background: #e0e0e0;
+        }
             background: var(--electric-blue);
             transform: translateY(-5px) scale(1.1);
             box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
@@ -464,7 +473,7 @@
 
         /* Clothing Rack Section */
         .clothing-rack-section {
-            padding: 4rem 0;
+            padding: 0;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -474,6 +483,7 @@
             height: auto;
             display: block;
             border-radius: 0;
+            margin: 0;
         }
 
         /* Setup Instructions */
@@ -529,15 +539,15 @@
         /* Footer */
         footer {
             padding: 3rem 4%;
-            border-top: 2px solid #e0e0e0;
+            border-top: none;
             text-align: center;
-            color: var(--deep-blue);
+            color: white;
             margin-top: 4rem;
-            background: white;
+            background: var(--deep-blue);
         }
 
         footer * {
-            color: var(--deep-blue);
+            color: white;
         }
 
         footer p {
@@ -545,13 +555,51 @@
         }
 
         footer a {
-            color: var(--electric-blue);
+            color: white;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         footer a:hover {
-            color: var(--rust);
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            transition: transform 0.3s ease;
+            display: inline-flex;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .icon-circle:hover {
+            background: #e0e0e0;
+        }
+
+        .icon-circle img,
+        .icon-circle svg {
+            width: 32px !important;
+            height: 32px !important;
         }
 
         /* Responsive */
@@ -636,22 +684,26 @@
 
     <!-- Clothing Rack Section -->
     <section class="clothing-rack-section">
-        <img src="new-hero-image.jpg" alt="Second Hand Blues collection" class="clothing-rack-image">
+        <img src="denim-background.png" alt="Embroidered denim with peace sign" class="clothing-rack-image">
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Second Hand Blues. Vintage. Alternative. Yours.</p>
+        <p>&copy; 2026 Second Hand Blues</p>
         <div class="social-icons">
             <a href="https://www.depop.com/secondhandblues/" target="_blank" class="social-icon depop-icon" title="Follow us on Depop">
-                <img src="depop-logo-navy.png" alt="Depop" style="width: 50px; height: 50px;">
+                <div class="icon-circle">
+                    <img src="depop-logo-navy.png" alt="Depop">
+                </div>
             </a>
             <a href="https://www.instagram.com/secondhandblues/" target="_blank" class="social-icon" title="Follow us on Instagram">
-                <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 50px; height: 50px;">
-                    <rect x="8" y="8" width="34" height="34" rx="8" stroke="white" stroke-width="3" fill="none"/>
-                    <circle cx="25" cy="25" r="8" stroke="white" stroke-width="3" fill="none"/>
-                    <circle cx="36" cy="14" r="2.5" fill="white"/>
-                </svg>
+                <div class="icon-circle">
+                    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="8" width="34" height="34" rx="8" stroke="#1a2456" stroke-width="3" fill="none"/>
+                        <circle cx="25" cy="25" r="8" stroke="#1a2456" stroke-width="3" fill="none"/>
+                        <circle cx="36" cy="14" r="2.5" fill="#1a2456"/>
+                    </svg>
+                </div>
             </a>
         </div>
     </footer>
