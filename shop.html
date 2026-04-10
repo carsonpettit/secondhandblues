@@ -124,7 +124,7 @@
         }
 
         footer p {
-            margin: 0.5rem 0;
+            margin: 0 0 1rem 0;
         }
 
         footer a {
@@ -135,6 +135,24 @@
 
         footer a:hover {
             color: var(--rust);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            display: inline-flex;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            opacity: 0.8;
         }
 
         /* Responsive */
@@ -163,6 +181,28 @@
                 font-size: 0.9rem;
             }
         }
+        /* All Shopify Buttons - Light Blue Hover */
+        .shopify-buy__btn,
+        .shopify-buy__btn--parent,
+        .shopify-buy__btn.shopify-buy__beside-quantity,
+        .shopify-buy__product .shopify-buy__btn,
+        .shopify-buy__modal .shopify-buy__btn,
+        .shopify-buy__cart .shopify-buy__btn,
+        .shopify-buy__cart-toggle,
+        button[class*="shopify"] {
+            background-color: #1a2456 !important;
+        }
+
+        .shopify-buy__btn:hover,
+        .shopify-buy__btn--parent:hover,
+        .shopify-buy__btn.shopify-buy__beside-quantity:hover,
+        .shopify-buy__product .shopify-buy__btn:hover,
+        .shopify-buy__modal .shopify-buy__btn:hover,
+        .shopify-buy__cart .shopify-buy__btn:hover,
+        .shopify-buy__cart-toggle:hover,
+        button[class*="shopify"]:hover {
+            background-color: #6ba3e8 !important;
+        }
     </style>
 </head>
 <body>
@@ -184,7 +224,7 @@
     <!-- Page Header -->
     <div class="page-header">
         <h2>Shop My Collection</h2>
-        <p>Curated vintage finds, handpicked just for you</p>
+        <p>The solution to my shopping problem.</p>
     </div>
 
     <!-- Products Section -->
@@ -194,11 +234,19 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Second Hand Blues. Vintage. Alternative. Yours.</p>
-        <p>
-            Follow us on 
-            <a href="https://www.depop.com/secondhandblues/" target="_blank">Depop @secondhandblues</a>
-        </p>
+        <p>&copy; 2026 Second Hand Blues</p>
+        <div class="social-icons">
+            <a href="https://www.depop.com/secondhandblues/" target="_blank" class="social-icon depop-icon" title="Follow us on Depop">
+                <img src="depop-logo-navy.png" alt="Depop" style="width: 40px; height: 40px;">
+            </a>
+            <a href="https://www.instagram.com/secondhandblues/" target="_blank" class="social-icon" title="Follow us on Instagram">
+                <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 40px; height: 40px;">
+                    <rect x="8" y="8" width="34" height="34" rx="8" stroke="#1a2456" stroke-width="3" fill="none"/>
+                    <circle cx="25" cy="25" r="8" stroke="#1a2456" stroke-width="3" fill="none"/>
+                    <circle cx="36" cy="14" r="2.5" fill="#1a2456"/>
+                </svg>
+            </a>
+        </div>
     </footer>
 
     <script type="text/javascript">
@@ -256,11 +304,11 @@
           },
           "button": {
             ":hover": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             },
             "background-color": "#1a2456",
             ":focus": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             },
             "border-radius": "12px",
             "padding-left": "23px",
@@ -297,11 +345,11 @@
           },
           "button": {
             ":hover": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             },
             "background-color": "#1a2456",
             ":focus": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             },
             "border-radius": "12px",
             "padding-left": "23px",
@@ -317,11 +365,11 @@
         "styles": {
           "button": {
             ":hover": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             },
             "background-color": "#1a2456",
             ":focus": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             },
             "border-radius": "12px"
           }
@@ -336,10 +384,10 @@
           "toggle": {
             "background-color": "#1a2456",
             ":hover": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             },
             ":focus": {
-              "background-color": "#d4634a"
+              "background-color": "#6ba3e8"
             }
           }
         }
@@ -350,6 +398,31 @@
       }
     })();
     /*]]>*/
+    </script>
+    <script>
+        // Force pagination buttons to be light blue on hover
+        setTimeout(function() {
+            const style = document.createElement('style');
+            style.innerHTML = `
+                button.shopify-buy__btn--parent,
+                button.shopify-buy__btn.shopify-buy__beside-quantity {
+                    background-color: #4a90e2 !important;
+                }
+                button.shopify-buy__btn--parent:hover,
+                button.shopify-buy__btn.shopify-buy__beside-quantity:hover {
+                    background-color: #6ba3e8 !important;
+                }
+                /* Pagination styling */
+                .shopify-buy__collection-pagination {
+                    display: flex !important;
+                    gap: 10px !important;
+                    justify-content: center !important;
+                    align-items: center !important;
+                    margin: 2rem 0 !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }, 2000);
     </script>
 </body>
 </html>
