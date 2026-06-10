@@ -4,18 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - Second Hand Blues</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Archivo+Narrow:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Archivo+Narrow:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --deep-blue: #1a2456;
             --electric-blue: #4a90e2;
             --rust: #d4634a;
-            --cream: #fef9f3;
         }
 
         * {
@@ -28,13 +22,18 @@
             font-family: 'Archivo Narrow', sans-serif;
             background: white;
             color: var(--deep-blue);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Header */
         header {
-            background: white;
-            padding: 1.5rem 4%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            padding: 2rem 2rem;
+            border-bottom: 2px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -58,32 +57,25 @@
         }
 
         h1 a {
-            text-decoration: none;
             color: var(--deep-blue);
+            text-decoration: none;
         }
 
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-menu {
+        nav ul {
             list-style: none;
             display: flex;
             gap: 2rem;
         }
 
-        .nav-menu a {
-            text-decoration: none;
+        nav a {
             color: var(--deep-blue);
+            text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
 
-        .nav-menu a:hover,
-        .nav-menu a.active {
+        nav a:hover,
+        nav a.active {
             color: var(--electric-blue);
         }
 
@@ -112,29 +104,46 @@
             padding: 2rem 4% 4rem;
             max-width: 1400px;
             margin: 0 auto;
+            flex-grow: 1;
+        }
+
+        .collection-header {
+            text-align: center;
+            margin: 4rem 0 2rem 0;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .collection-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-blue);
+            margin: 0;
         }
 
         /* Footer */
         footer {
-            background: var(--deep-blue);
-            color: white;
+            padding: 3rem 4%;
+            border-top: none;
             text-align: center;
-            padding: 2rem 4%;
+            color: white;
             margin-top: 4rem;
+            background: var(--deep-blue);
         }
 
         footer p {
-            margin: 0 0 1rem 0;
+            margin-bottom: 1rem;
+            color: white;
         }
 
         footer a {
-            color: var(--electric-blue);
+            color: white;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         footer a:hover {
-            color: var(--rust);
+            color: white;
         }
 
         .social-icons {
@@ -142,64 +151,62 @@
             gap: 1.5rem;
             justify-content: center;
             align-items: center;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .social-icon {
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.3s ease;
             display: inline-flex;
         }
 
         .social-icon:hover {
             transform: translateY(-3px);
-            opacity: 0.8;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .page-header h2 {
-                font-size: 2.5rem;
-            }
-
-            .header-content {
-                flex-wrap: wrap;
-            }
-
-            nav {
-                gap: 1rem;
-                width: 100%;
-                justify-content: center;
-                margin-top: 1rem;
-            }
-
-            .nav-menu {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
         }
-        /* All Shopify Buttons - Light Blue Hover */
+
+        .icon-circle:hover {
+            background: #e0e0e0;
+        }
+
+        .icon-circle img,
+        .icon-circle svg {
+            width: 32px !important;
+            height: 32px !important;
+        }
+
+        /* Hide compare at prices */
+        .shopify-buy__product__compare-at,
+        .shopify-buy__product__actual-price--compare-at,
+        .shopify-buy__product__variant-selectors + .shopify-buy__product__price,
+        .shopify-buy__product__price del,
+        .shopify-buy__product__price s,
+        .shopify-buy__product__price strike {
+            display: none !important;
+        }
+
+        .shopify-buy__product {
+            cursor: pointer !important;
+        }
+
+        /* Buttons */
         .shopify-buy__btn,
         .shopify-buy__btn--parent,
-        .shopify-buy__btn.shopify-buy__beside-quantity,
-        .shopify-buy__product .shopify-buy__btn,
-        .shopify-buy__modal .shopify-buy__btn,
-        .shopify-buy__cart .shopify-buy__btn,
-        .shopify-buy__cart-toggle,
         button[class*="shopify"] {
             background-color: #1a2456 !important;
         }
 
         .shopify-buy__btn:hover,
         .shopify-buy__btn--parent:hover,
-        .shopify-buy__btn.shopify-buy__beside-quantity:hover,
-        .shopify-buy__product .shopify-buy__btn:hover,
-        .shopify-buy__modal .shopify-buy__btn:hover,
-        .shopify-buy__cart .shopify-buy__btn:hover,
-        .shopify-buy__cart-toggle:hover,
         button[class*="shopify"]:hover {
             background-color: #6ba3e8 !important;
         }
@@ -229,23 +236,41 @@
 
     <!-- Products Section -->
     <section class="products-section">
-        <div id='collection-component-1775588108670'></div>
+        <!-- Tees & Tanks -->
+        <div class="collection-header">
+            <h3>Tees & Tanks</h3>
+        </div>
+        <div id='collection-component-tees'></div>
+
+        <!-- Long Sleeves & Sweaters -->
+        <div class="collection-header">
+            <h3>Long Sleeves & Sweaters</h3>
+        </div>
+        <div id='collection-component-sleeves'></div>
+
+        <!-- Bottoms -->
+        <div class="collection-header">
+            <h3>Bottoms</h3>
+        </div>
+        <div id='collection-component-bottoms'></div>
+
+        <!-- Dresses -->
+        <div class="collection-header">
+            <h3>Dresses</h3>
+        </div>
+        <div id='collection-component-dresses'></div>
+
+        <!-- Shoes & Accessories -->
+        <div class="collection-header">
+            <h3>Shoes & Accessories</h3>
+        </div>
+        <div id='collection-component-shoes'></div>
     </section>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 Second Hand Blues</p>
         <div class="social-icons">
-            <a href="https://www.depop.com/secondhandblues/" target="_blank" class="social-icon depop-icon" title="Follow us on Depop">
-                <img src="depop-logo-navy.png" alt="Depop" style="width: 40px; height: 40px;">
-            </a>
-            <a href="https://www.instagram.com/secondhandblues/" target="_blank" class="social-icon" title="Follow us on Instagram">
-                <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 40px; height: 40px;">
-                    <rect x="8" y="8" width="34" height="34" rx="8" stroke="#1a2456" stroke-width="3" fill="none"/>
-                    <circle cx="25" cy="25" r="8" stroke="#1a2456" stroke-width="3" fill="none"/>
-                    <circle cx="36" cy="14" r="2.5" fill="#1a2456"/>
-                </svg>
-            </a>
         </div>
     </footer>
 
@@ -272,157 +297,158 @@
       function ShopifyBuyInit() {
         var client = ShopifyBuy.buildClient({
           domain: 'x3thui-yk.myshopify.com',
-          storefrontAccessToken: '9dec90d1e19b88e9e4af5b29481d0b41',
+          storefrontAccessToken: '9dec90d1e19b88e9e4af5b29481d0b41'
         });
         ShopifyBuy.UI.onReady(client).then(function (ui) {
           ui.createComponent('collection', {
-            id: '357369282714',
-            node: document.getElementById('collection-component-1775588108670'),
+            id: '361653010586',
+            node: document.getElementById('collection-component-tees'),
             moneyFormat: '%24%7B%7Bamount%7D%7D',
             options: {
-      "product": {
-        "styles": {
-          "product": {
-            "@media (min-width: 601px)": {
-              "max-width": "calc(25% - 20px)",
-              "margin-left": "20px",
-              "margin-bottom": "50px",
-              "width": "calc(25% - 20px)"
-            },
-            "img": {
-              "height": "calc(100% - 15px)",
-              "position": "absolute",
-              "left": "0",
-              "right": "0",
-              "top": "0"
-            },
-            "imgWrapper": {
-              "padding-top": "calc(75% + 15px)",
-              "position": "relative",
-              "height": "0"
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px",
+                      "width": "calc(25% - 20px)"
+                    }
+                  },
+                  "button": {
+                    "background-color": "#1a2456",
+                    ":hover": {
+                      "background-color": "#6ba3e8"
+                    }
+                  }
+                },
+                "text": {
+                  "button": "Add to cart"
+                },
+                "buttonDestination": "modal"
+              }
             }
-          },
-          "button": {
-            ":hover": {
-              "background-color": "#6ba3e8"
-            },
-            "background-color": "#1a2456",
-            ":focus": {
-              "background-color": "#6ba3e8"
-            },
-            "border-radius": "12px",
-            "padding-left": "23px",
-            "padding-right": "23px"
-          }
-        },
-        "text": {
-          "button": "Add to cart"
-        }
-      },
-      "productSet": {
-        "styles": {
-          "products": {
-            "@media (min-width: 601px)": {
-              "margin-left": "-20px"
+          });
+          ui.createComponent('collection', {
+            id: '361653305498',
+            node: document.getElementById('collection-component-sleeves'),
+            moneyFormat: '%24%7B%7Bamount%7D%7D',
+            options: {
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px",
+                      "width": "calc(25% - 20px)"
+                    }
+                  },
+                  "button": {
+                    "background-color": "#1a2456",
+                    ":hover": {
+                      "background-color": "#6ba3e8"
+                    }
+                  }
+                },
+                "text": {
+                  "button": "Add to cart"
+                },
+                "buttonDestination": "modal"
+              }
             }
-          }
-        }
-      },
-      "modalProduct": {
-        "contents": {
-          "img": false,
-          "imgWithCarousel": true,
-          "button": false,
-          "buttonWithQuantity": true
-        },
-        "styles": {
-          "product": {
-            "@media (min-width: 601px)": {
-              "max-width": "100%",
-              "margin-left": "0px",
-              "margin-bottom": "0px"
+          });
+          ui.createComponent('collection', {
+            id: '361653403802',
+            node: document.getElementById('collection-component-bottoms'),
+            moneyFormat: '%24%7B%7Bamount%7D%7D',
+            options: {
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px",
+                      "width": "calc(25% - 20px)"
+                    }
+                  },
+                  "button": {
+                    "background-color": "#1a2456",
+                    ":hover": {
+                      "background-color": "#6ba3e8"
+                    }
+                  }
+                },
+                "text": {
+                  "button": "Add to cart"
+                },
+                "buttonDestination": "modal"
+              }
             }
-          },
-          "button": {
-            ":hover": {
-              "background-color": "#6ba3e8"
-            },
-            "background-color": "#1a2456",
-            ":focus": {
-              "background-color": "#6ba3e8"
-            },
-            "border-radius": "12px",
-            "padding-left": "23px",
-            "padding-right": "23px"
-          }
-        },
-        "text": {
-          "button": "Add to cart"
-        }
-      },
-      "option": {},
-      "cart": {
-        "styles": {
-          "button": {
-            ":hover": {
-              "background-color": "#6ba3e8"
-            },
-            "background-color": "#1a2456",
-            ":focus": {
-              "background-color": "#6ba3e8"
-            },
-            "border-radius": "12px"
-          }
-        },
-        "text": {
-          "total": "Subtotal",
-          "button": "Checkout"
-        }
-      },
-      "toggle": {
-        "styles": {
-          "toggle": {
-            "background-color": "#1a2456",
-            ":hover": {
-              "background-color": "#6ba3e8"
-            },
-            ":focus": {
-              "background-color": "#6ba3e8"
+          });
+          ui.createComponent('collection', {
+            id: '361653174426',
+            node: document.getElementById('collection-component-dresses'),
+            moneyFormat: '%24%7B%7Bamount%7D%7D',
+            options: {
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px",
+                      "width": "calc(25% - 20px)"
+                    }
+                  },
+                  "button": {
+                    "background-color": "#1a2456",
+                    ":hover": {
+                      "background-color": "#6ba3e8"
+                    }
+                  }
+                },
+                "text": {
+                  "button": "Add to cart"
+                },
+                "buttonDestination": "modal"
+              }
             }
-          }
-        }
-      }
-    }
+          });
+          ui.createComponent('collection', {
+            id: '361653600410',
+            node: document.getElementById('collection-component-shoes'),
+            moneyFormat: '%24%7B%7Bamount%7D%7D',
+            options: {
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px",
+                      "width": "calc(25% - 20px)"
+                    }
+                  },
+                  "button": {
+                    "background-color": "#1a2456",
+                    ":hover": {
+                      "background-color": "#6ba3e8"
+                    }
+                  }
+                },
+                "text": {
+                  "button": "Add to cart"
+                },
+                "buttonDestination": "modal"
+              }
+            }
           });
         });
       }
     })();
     /*]]>*/
-    </script>
-    <script>
-        // Force pagination buttons to be light blue on hover
-        setTimeout(function() {
-            const style = document.createElement('style');
-            style.innerHTML = `
-                button.shopify-buy__btn--parent,
-                button.shopify-buy__btn.shopify-buy__beside-quantity {
-                    background-color: #4a90e2 !important;
-                }
-                button.shopify-buy__btn--parent:hover,
-                button.shopify-buy__btn.shopify-buy__beside-quantity:hover {
-                    background-color: #6ba3e8 !important;
-                }
-                /* Pagination styling */
-                .shopify-buy__collection-pagination {
-                    display: flex !important;
-                    gap: 10px !important;
-                    justify-content: center !important;
-                    align-items: center !important;
-                    margin: 2rem 0 !important;
-                }
-            `;
-            document.head.appendChild(style);
-        }, 2000);
     </script>
 </body>
 </html>
