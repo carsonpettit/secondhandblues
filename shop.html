@@ -1,540 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - Second Hand Blues</title>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Archivo+Narrow:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --deep-blue: #1a2456;
-            --electric-blue: #4a90e2;
-            --rust: #d4634a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Archivo Narrow', sans-serif;
-            background: white;
-            color: var(--deep-blue);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        header {
-            position: relative;
-            padding: 2rem 2rem;
-            border-bottom: 2px solid #e0e0e0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        h1 {
-            font-family: 'Allura', cursive;
-            font-size: 3.5rem;
-            font-weight: 400;
-            letter-spacing: 1px;
-            color: var(--deep-blue);
-        }
-
-        h1 a {
-            color: var(--deep-blue);
-            text-decoration: none;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: var(--deep-blue);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: var(--electric-blue);
-        }
-
-        /* Page Header */
-        .page-header {
-            padding: 4rem 4%;
-            text-align: center;
-            background: white;
-        }
-
-        .page-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--deep-blue);
-            margin-bottom: 1rem;
-        }
-
-        .page-header p {
-            font-size: 1.2rem;
-            color: var(--deep-blue);
-        }
-
-        /* Products Section */
-        .products-section {
-            padding: 2rem 4% 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            flex-grow: 1;
-            width: 100%;
-        }
-
-        .collection-header {
-            text-align: center;
-            margin: 4rem 0 2rem 0;
-            padding-top: 2rem;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .collection-header h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--deep-blue);
-            margin: 0;
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 4%;
-            border-top: none;
-            text-align: center;
-            color: white;
-            margin-top: 4rem;
-            background: var(--deep-blue);
-        }
-
-        footer p {
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        footer a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: white;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            align-items: center;
-            margin-top: 1.5rem;
-        }
-
-        .social-icon {
-            transition: transform 0.3s ease;
-            display: inline-flex;
-        }
-
-        .social-icon:hover {
-            transform: translateY(-3px);
-        }
-
-        .icon-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-
-        .icon-circle:hover {
-            background: #e0e0e0;
-        }
-
-        .icon-circle img,
-        .icon-circle svg {
-            width: 32px !important;
-            height: 32px !important;
-        }
-
-        /* Hide compare at prices */
-        .shopify-buy__product__compare-at,
-        .shopify-buy__product__actual-price--compare-at,
-        .shopify-buy__product__variant-selectors + .shopify-buy__product__price,
-        .shopify-buy__product__price del,
-        .shopify-buy__product__price s,
-        .shopify-buy__product__price strike {
-            display: none !important;
-        }
-
-        .shopify-buy__product {
-            cursor: pointer !important;
-        }
-
-        /* Buttons */
-        .shopify-buy__btn,
-        .shopify-buy__btn--parent,
-        button[class*="shopify"] {
-            background-color: #1a2456 !important;
-        }
-
-        .shopify-buy__btn:hover,
-        .shopify-buy__btn--parent:hover,
-        button[class*="shopify"]:hover {
-            background-color: #6ba3e8 !important;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop | Second Hand Blues</title>
+<meta name="description" content="Second Hand Blues: curated vintage and thrifted clothing and personal style bundles, hand-picked one piece at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <h1><a href="index.html">Second Hand Blues</a></h1>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html" class="active">Shop</a></li>
-                    <li><a href="bundles.html">Custom Bundles</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-            </nav>
+<body class="shop">
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="logo" href="index.html"><img src="logo-line.png" alt="Second Hand Blues home" width="2400" height="277"></a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active" aria-current="page">Shop</a>
+      <a href="bundles.html">Style bundles</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button class="fav-toggle" type="button" aria-label="Favorites" aria-controls="favDrawer" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.1A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1z"/></svg>
+      <span class="fav-count" hidden>0</span>
+    </button>
+  </div>
+</header>
+<aside id="favDrawer" class="fav-drawer" aria-label="Favorites" hidden>
+  <div class="fav-drawer-head"><h2>Favorites</h2><button class="fav-close" type="button" aria-label="Close favorites">&times;</button></div>
+  <div class="fav-list"></div>
+</aside>
+<div class="fav-scrim" hidden></div>
+<main class="wrap" style="padding-bottom: 4rem;">
+  <div class="page-header">
+    <h1>Shop my collection</h1>
+    <p>The solution to my shopping problem.</p>
+  </div>
+  <div class="shop-layout">
+    <aside class="filters" aria-label="Filters">
+      <button class="filters-toggle btn btn-ink" type="button" aria-expanded="false" aria-controls="filterPanel">Filter and sort</button>
+      <div id="filterPanel" class="filter-panel">
+        <div class="filter-group">
+          <h2 class="filter-title">Category</h2>
+          <ul class="cat-tree" id="catTree"></ul>
         </div>
-    </header>
-
-    <!-- Page Header -->
-    <div class="page-header">
-        <h2>Shop My Collection</h2>
-        <p>The solution to my shopping problem.</p>
-    </div>
-
-    <!-- Products Section -->
-    <section class="products-section">
-        <!-- Tees & Tanks -->
-        <div class="collection-header">
-            <h3>Tees & Tanks</h3>
+        <div class="filter-group">
+          <label class="filter-title" for="sortSelect">Sort by</label>
+          <select id="sortSelect">
+            <option value="new">Newest</option>
+            <option value="low">Price: low to high</option>
+            <option value="high">Price: high to low</option>
+          </select>
         </div>
-        <div id='collection-component-tees'></div>
-
-        <!-- Long Sleeves & Sweaters -->
-        <div class="collection-header">
-            <h3>Long Sleeves & Sweaters</h3>
-        </div>
-        <div id='collection-component-sleeves'></div>
-
-        <!-- Bottoms -->
-        <div class="collection-header">
-            <h3>Bottoms</h3>
-        </div>
-        <div id='collection-component-bottoms'></div>
-
-        <!-- Dresses -->
-        <div class="collection-header">
-            <h3>Dresses</h3>
-        </div>
-        <div id='collection-component-dresses'></div>
-
-        <!-- Shoes & Accessories -->
-        <div class="collection-header">
-            <h3>Shoes & Accessories</h3>
-        </div>
-        <div id='collection-component-shoes'></div>
+        <button class="link-btn" type="button" id="clearFilters">Clear all filters</button>
+      </div>
+    </aside>
+    <section class="results" aria-live="polite">
+      <div class="results-bar"><span id="resultCount">Loading pieces&hellip;</span><span id="activeFilters"></span></div>
+      <div class="product-grid" id="productGrid"></div>
     </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Second Hand Blues</p>
-        <div class="social-icons">
-        </div>
-    </footer>
-
-    <script type="text/javascript">
-    /*<![CDATA[*/
-    (function () {
-      var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-      if (window.ShopifyBuy) {
-        if (window.ShopifyBuy.UI) {
-          ShopifyBuyInit();
-        } else {
-          loadScript();
-        }
-      } else {
-        loadScript();
-      }
-      function loadScript() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = scriptURL;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
-        script.onload = ShopifyBuyInit;
-      }
-      function ShopifyBuyInit() {
-        var client = ShopifyBuy.buildClient({
-          domain: 'x3thui-yk.myshopify.com',
-          storefrontAccessToken: '9dec90d1e19b88e9e4af5b29481d0b41'
-        });
-        ShopifyBuy.UI.onReady(client).then(function (ui) {
-          ui.createComponent('collection', {
-            id: '361653010586',
-            node: document.getElementById('collection-component-tees'),
-            moneyFormat: '%24%7B%7Bamount%7D%7D',
-            options: {
-              "product": {
-                "styles": {
-                  "product": {
-                    "@media (min-width: 601px)": {
-                      "max-width": "calc(25% - 20px)",
-                      "margin-left": "20px",
-                      "margin-bottom": "50px",
-                      "width": "calc(25% - 20px)"
-                    },
-                    "img": {
-                      "height": "calc(100% - 15px)",
-                      "position": "absolute",
-                      "left": "0",
-                      "right": "0",
-                      "top": "0"
-                    },
-                    "imgWrapper": {
-                      "padding-top": "calc(75% + 15px)",
-                      "position": "relative",
-                      "height": "0"
-                    }
-                  },
-                  "button": {
-                    "background-color": "#1a2456",
-                    ":hover": {"background-color": "#6ba3e8"}
-                  }
-                },
-                "text": {"button": "Add to cart"},
-                "buttonDestination": "modal"
-              },
-              "productSet": {
-                "styles": {
-                  "products": {
-                    "@media (min-width: 601px)": {
-                      "margin-left": "-20px"
-                    }
-                  }
-                }
-              }
-            }
-          });
-          ui.createComponent('collection', {
-            id: '361653305498',
-            node: document.getElementById('collection-component-sleeves'),
-            moneyFormat: '%24%7B%7Bamount%7D%7D',
-            options: {
-              "product": {
-                "styles": {
-                  "product": {
-                    "@media (min-width: 601px)": {
-                      "max-width": "calc(25% - 20px)",
-                      "margin-left": "20px",
-                      "margin-bottom": "50px",
-                      "width": "calc(25% - 20px)"
-                    },
-                    "img": {
-                      "height": "calc(100% - 15px)",
-                      "position": "absolute",
-                      "left": "0",
-                      "right": "0",
-                      "top": "0"
-                    },
-                    "imgWrapper": {
-                      "padding-top": "calc(75% + 15px)",
-                      "position": "relative",
-                      "height": "0"
-                    }
-                  },
-                  "button": {
-                    "background-color": "#1a2456",
-                    ":hover": {"background-color": "#6ba3e8"}
-                  }
-                },
-                "text": {"button": "Add to cart"},
-                "buttonDestination": "modal"
-              },
-              "productSet": {
-                "styles": {
-                  "products": {
-                    "@media (min-width: 601px)": {
-                      "margin-left": "-20px"
-                    }
-                  }
-                }
-              }
-            }
-          });
-          ui.createComponent('collection', {
-            id: '361653403802',
-            node: document.getElementById('collection-component-bottoms'),
-            moneyFormat: '%24%7B%7Bamount%7D%7D',
-            options: {
-              "product": {
-                "styles": {
-                  "product": {
-                    "@media (min-width: 601px)": {
-                      "max-width": "calc(25% - 20px)",
-                      "margin-left": "20px",
-                      "margin-bottom": "50px",
-                      "width": "calc(25% - 20px)"
-                    },
-                    "img": {
-                      "height": "calc(100% - 15px)",
-                      "position": "absolute",
-                      "left": "0",
-                      "right": "0",
-                      "top": "0"
-                    },
-                    "imgWrapper": {
-                      "padding-top": "calc(75% + 15px)",
-                      "position": "relative",
-                      "height": "0"
-                    }
-                  },
-                  "button": {
-                    "background-color": "#1a2456",
-                    ":hover": {"background-color": "#6ba3e8"}
-                  }
-                },
-                "text": {"button": "Add to cart"},
-                "buttonDestination": "modal"
-              },
-              "productSet": {
-                "styles": {
-                  "products": {
-                    "@media (min-width: 601px)": {
-                      "margin-left": "-20px"
-                    }
-                  }
-                }
-              }
-            }
-          });
-          ui.createComponent('collection', {
-            id: '361653174426',
-            node: document.getElementById('collection-component-dresses'),
-            moneyFormat: '%24%7B%7Bamount%7D%7D',
-            options: {
-              "product": {
-                "styles": {
-                  "product": {
-                    "@media (min-width: 601px)": {
-                      "max-width": "calc(25% - 20px)",
-                      "margin-left": "20px",
-                      "margin-bottom": "50px",
-                      "width": "calc(25% - 20px)"
-                    },
-                    "img": {
-                      "height": "calc(100% - 15px)",
-                      "position": "absolute",
-                      "left": "0",
-                      "right": "0",
-                      "top": "0"
-                    },
-                    "imgWrapper": {
-                      "padding-top": "calc(75% + 15px)",
-                      "position": "relative",
-                      "height": "0"
-                    }
-                  },
-                  "button": {
-                    "background-color": "#1a2456",
-                    ":hover": {"background-color": "#6ba3e8"}
-                  }
-                },
-                "text": {"button": "Add to cart"},
-                "buttonDestination": "modal"
-              },
-              "productSet": {
-                "styles": {
-                  "products": {
-                    "@media (min-width: 601px)": {
-                      "margin-left": "-20px"
-                    }
-                  }
-                }
-              }
-            }
-          });
-          ui.createComponent('collection', {
-            id: '361653600410',
-            node: document.getElementById('collection-component-shoes'),
-            moneyFormat: '%24%7B%7Bamount%7D%7D',
-            options: {
-              "product": {
-                "styles": {
-                  "product": {
-                    "@media (min-width: 601px)": {
-                      "max-width": "calc(25% - 20px)",
-                      "margin-left": "20px",
-                      "margin-bottom": "50px",
-                      "width": "calc(25% - 20px)"
-                    },
-                    "img": {
-                      "height": "calc(100% - 15px)",
-                      "position": "absolute",
-                      "left": "0",
-                      "right": "0",
-                      "top": "0"
-                    },
-                    "imgWrapper": {
-                      "padding-top": "calc(75% + 15px)",
-                      "position": "relative",
-                      "height": "0"
-                    }
-                  },
-                  "button": {
-                    "background-color": "#1a2456",
-                    ":hover": {"background-color": "#6ba3e8"}
-                  }
-                },
-                "text": {"button": "Add to cart"},
-                "buttonDestination": "modal"
-              },
-              "productSet": {
-                "styles": {
-                  "products": {
-                    "@media (min-width: 601px)": {
-                      "margin-left": "-20px"
-                    }
-                  }
-                }
-              }
-            }
-          });
-        });
-      }
-    })();
-    /*]]>*/
-    </script>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo-line.png" alt="Second Hand Blues" width="2400" height="277">
+        <p>Curated vintage and thrifted clothing and personal style bundles, hand-picked since 2024.</p>
+      </div>
+      <nav class="footer-col" aria-label="Site">
+        <strong>Shop</strong>
+        <a href="shop.html">Shop the collection</a>
+        <a href="bundles.html">Style bundles</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Second Hand Blues</div>
+  </div>
+</footer>
+<script src="shop.js"></script>
+<script>SHB.mountShop();</script>
 </body>
 </html>
