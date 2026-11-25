@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style bundles | Second Hand Blues</title>
+<meta name="description" content="Second Hand Blues: curated vintage and thrifted clothing and personal style bundles, hand-picked one piece at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="bundles">
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="logo" href="index.html"><img src="logo-line.png" alt="Second Hand Blues home" width="2400" height="268"></a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="nav-dd">
+        <a href="shop.html">Shop</a><button class="dd-caret" type="button" aria-expanded="false" aria-controls="shopMenu" aria-label="Show shop categories"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
+        <div class="dd-panel" id="shopMenu"><div class="dd-inner"><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Tops">Tops</a><ul><li><a href="shop.html?cat=Tops&amp;sub=Tank%20tops%20%26%20camis">Tank tops &amp; camis</a></li><li><a href="shop.html?cat=Tops&amp;sub=Tees">Tees</a></li><li><a href="shop.html?cat=Tops&amp;sub=Long%20sleeves">Long sleeves</a></li><li><a href="shop.html?cat=Tops&amp;sub=Sweaters%20%26%20cardigans">Sweaters &amp; cardigans</a></li><li><a href="shop.html?cat=Tops&amp;sub=Blouses%20%26%20tops">Blouses &amp; tops</a></li><li><a href="shop.html?cat=Tops&amp;sub=Bodysuits">Bodysuits</a></li><li><a href="shop.html?cat=Tops&amp;sub=Outerwear">Outerwear</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Bottoms">Bottoms</a><ul><li><a href="shop.html?cat=Bottoms&amp;sub=Jeans">Jeans</a></li><li><a href="shop.html?cat=Bottoms&amp;sub=Shorts">Shorts</a></li><li><a href="shop.html?cat=Bottoms&amp;sub=Skirts">Skirts</a></li><li><a href="shop.html?cat=Bottoms&amp;sub=Pants">Pants</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Dresses">Dresses</a><ul><li><a href="shop.html?cat=Dresses&amp;sub=Mini%20dresses">Mini dresses</a></li><li><a href="shop.html?cat=Dresses&amp;sub=Midi%20%26%20maxi%20dresses">Midi &amp; maxi dresses</a></li><li><a href="shop.html?cat=Dresses&amp;sub=Slip%20dresses">Slip dresses</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Shoes">Shoes</a><ul><li><a href="shop.html?cat=Shoes&amp;sub=Sneakers">Sneakers</a></li><li><a href="shop.html?cat=Shoes&amp;sub=Flats">Flats</a></li><li><a href="shop.html?cat=Shoes&amp;sub=Boots">Boots</a></li><li><a href="shop.html?cat=Shoes&amp;sub=Sandals%20%26%20heels">Sandals &amp; heels</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Accessories">Accessories</a><ul><li><a href="shop.html?cat=Accessories&amp;sub=Bags">Bags</a></li><li><a href="shop.html?cat=Accessories&amp;sub=Jewelry">Jewelry</a></li><li><a href="shop.html?cat=Accessories&amp;sub=Hats%20%26%20headbands">Hats &amp; headbands</a></li><li><a href="shop.html?cat=Accessories&amp;sub=Sunglasses">Sunglasses</a></li></ul></div></div></div>
+      </div>
+      <a href="bundles.html" class="active" aria-current="page">Style bundles</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-icons">
+      <button class="fav-toggle icon-btn" type="button" aria-label="Favorites" aria-controls="favDrawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.1A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1z"/></svg>
+        <span class="fav-count" hidden>0</span>
+      </button>
+      <button class="cart-toggle icon-btn" type="button" aria-label="Shopping bag">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12.5H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        <span class="cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+<aside id="favDrawer" class="fav-drawer" aria-label="Favorites" hidden>
+  <div class="fav-drawer-head"><h2>Favorites</h2><button class="fav-close" type="button" aria-label="Close favorites">&times;</button></div>
+  <div class="fav-list"></div>
+</aside>
+<div class="fav-scrim" hidden></div>
+<main class="wrap" style="padding-bottom: 4rem; max-width: 880px;">
+  <div class="page-header">
+    <h1>Let me bring your Pinterest board to life.</h1>
+    <p>Tell me your sizes and style, pick a bundle, and I'll source a one-of-a-kind set just for you.</p>
+  </div>
+  <div class="form-card">
+    <h2>Request your style bundle</h2>
+    <form id="bundleForm" class="bundle-form">
+      <div class="form-row">
+        <div class="form-group"><label for="firstName">First name *</label><input type="text" id="firstName" name="firstName" autocomplete="given-name" required></div>
+        <div class="form-group"><label for="lastName">Last name *</label><input type="text" id="lastName" name="lastName" autocomplete="family-name" required></div>
+      </div>
+      <div class="form-group"><label for="email">Email *</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+      <div class="form-row">
+        <div class="form-group"><label for="topSize">Top size *</label><select id="topSize" name="topSize" required><option value="">Select size</option><option value="XS">XS</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option></select></div>
+        <div class="form-group"><label for="bottomSize">Bottom size *</label><select id="bottomSize" name="bottomSize" required><option value="">Select size</option><option value="XS">XS</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option></select></div>
+      </div>
+      <div class="form-group"><label for="pinterestLink">Link to Pinterest inspo and/or Depop likes</label><input type="url" id="pinterestLink" name="pinterestLink" placeholder="https://pinterest.com/..."></div>
+      <fieldset class="form-group" style="border: 0;">
+        <legend class="field-label" style="margin-bottom: 8px;">Pick a bundle size *</legend>
+        <div class="bundle-options">
+          <label class="bundle-option"><input type="radio" name="bundleSize" value="small" required><div class="bundle-card"><h4>Small</h4><ul><li>2 tops</li><li>1 bottom</li></ul></div></label>
+          <label class="bundle-option"><input type="radio" name="bundleSize" value="medium"><div class="bundle-card"><h4>Medium</h4><ul><li>3 tops</li><li>1 bottom</li><li>1 accessory</li></ul></div></label>
+          <label class="bundle-option"><input type="radio" name="bundleSize" value="large"><div class="bundle-card"><h4>Large</h4><ul><li>4 tops</li><li>2 bottoms</li><li>2 accessories</li></ul></div></label>
+          <label class="bundle-option"><input type="radio" name="bundleSize" value="custom"><div class="bundle-card"><h4>Custom size</h4><p>Tell me what you want!</p></div></label>
+        </div>
+      </fieldset>
+      <div class="form-group"><label for="preferences">Additional preferences</label><textarea id="preferences" name="preferences" rows="5" placeholder="Colors you love, pieces you're hunting for, fits you like..."></textarea></div>
+      <div class="form-group checkbox-group"><label><input type="checkbox" name="zoomCall" value="yes"> I'd like to set up a Zoom call to chat about what I'm looking for</label></div>
+      <button type="submit" class="btn btn-ink">Submit my bundle request</button>
+    </form>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo-line.png" alt="Second Hand Blues" width="2400" height="268">
+        <p>Curated vintage and thrifted clothing and personal style bundles, hand-picked since 2024.</p>
+      </div>
+      <nav class="footer-col" aria-label="Site">
+        <a href="shop.html">Shop</a>
+        <a href="bundles.html">Style bundles</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Second Hand Blues</div>
+  </div>
+</footer>
+<script src="shop.js"></script>
+<script>
+  var bundleForm = document.getElementById('bundleForm');
+  bundleForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = Object.fromEntries(new FormData(bundleForm));
+    alert('Thank you for your bundle request, ' + data.firstName + '! I\'ll be in touch soon via email at ' + data.email + ' to discuss your custom bundle.');
+    bundleForm.reset();
+    // To actually receive requests, connect this form to Formspree (formspree.io) or EmailJS.
+  });
+</script>
+</body>
+</html>
