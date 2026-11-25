@@ -94,11 +94,14 @@
         cart: { 'background-color': CREAM }
       },
       googleFonts: ['Fraunces', 'Inter'],
-      text: { title: 'Your bag', total: 'Subtotal', button: 'Checkout' }
+      text: { title: 'Your bag', total: 'Subtotal', button: 'Checkout' },
+      popup: false,
+      events: { afterRender: function (c) { setCartCount(c); } }
     },
     toggle: {
+      contents: { title: false, icon: false, count: false },
       styles: {
-        toggle: { 'background-color': INK, ':hover': { 'background-color': INK_HOVER }, ':focus': { 'background-color': INK_HOVER } },
+        toggle: { 'display': 'none' },
         count: { 'font-size': '15px' }
       }
     }
@@ -113,22 +116,44 @@
     document.head.appendChild(s);
   }
 
+  function setCartCount(c) {
+    var n = 0;
+    try { (c.model.lineItems || []).forEach(function (li) { n += li.quantity || 0; }); } catch (e) {}
+    document.querySelectorAll('.cart-count').forEach(function (el) { el.textContent = n; el.hidden = !n; });
+  }
+  var uiPromise = null;
+  function getUI() {
+    if (uiPromise) return uiPromise;
+    uiPromise = new Promise(function (resolve) {
+      load(function () {
+        var client = ShopifyBuy.buildClient(SHOP);
+        ShopifyBuy.UI.onReady(client).then(function (ui) {
+          ui.createCart({ options: options, moneyFormat: '%24%7B%7Bamount%7D%7D' }).then(function (c) { setCartCount(c); resolve(ui); }, function () { resolve(ui); });
+        });
+      });
+    });
+    return uiPromise;
+  }
+  function openCart() { getUI().then(function (ui) { ui.openCart(); }); }
+  function initCart() {
+    document.querySelectorAll('.cart-toggle').forEach(function (b) { b.onclick = openCart; });
+    if (!window.SHB_MOCK) setTimeout(getUI, 600);
+  }
   var productCache = {}, hiddenHost;
   function openProduct(id) {
-    load(function () {
-      var client = ShopifyBuy.buildClient(SHOP);
-      ShopifyBuy.UI.onReady(client).then(function (ui) {
-        if (productCache[id]) { productCache[id].openModal(); return; }
-        if (!hiddenHost) { hiddenHost = document.createElement('div'); hiddenHost.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px'; document.body.appendChild(hiddenHost); }
-        var node = document.createElement('div'); hiddenHost.appendChild(node);
-        ui.createComponent('product', { id: id, node: node, moneyFormat: '%24%7B%7Bamount%7D%7D', options: options })
-          .then(function (c) { productCache[id] = c; c.openModal(); });
-      });
+    getUI().then(function (ui) {
+      if (productCache[id]) { productCache[id].openModal(); return; }
+      if (!hiddenHost) { hiddenHost = document.createElement('div'); hiddenHost.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px'; document.body.appendChild(hiddenHost); }
+      var node = document.createElement('div'); hiddenHost.appendChild(node);
+      ui.createComponent('product', { id: id, node: node, moneyFormat: '%24%7B%7Bamount%7D%7D', options: options })
+        .then(function (c) { productCache[id] = c; c.openModal(); });
     });
   }
 
   window.SHB = {
     openProduct: openProduct,
+    openCart: openCart,
+    initCart: initCart,
     mountCollections: function (list) {
       load(function () {
         var client = ShopifyBuy.buildClient(SHOP);
@@ -157,14 +182,39 @@
   var API = 'https://x3thui-yk.myshopify.com/api/2024-10/graphql.json';
   var TOKEN = '9dec90d1e19b88e9e4af5b29481d0b41';
   var TREE = [
-    ['Tops', ['Tank tops & camis', 'Tees', 'Long sleeves', 'Sweaters & cardigans', 'Blouses & tops', 'Bodysuits']],
+    ['Tops', ['Tank tops & camis', 'Tees', 'Long sleeves', 'Sweaters & cardigans', 'Blouses & tops', 'Bodysuits', 'Outerwear']],
     ['Bottoms', ['Jeans', 'Shorts', 'Skirts', 'Pants']],
     ['Dresses', ['Mini dresses', 'Midi & maxi dresses', 'Slip dresses']],
-    ['Outerwear', ['Jackets & coats', 'Hoodies & zip-ups']],
     ['Shoes', ['Sneakers', 'Flats', 'Boots', 'Sandals & heels']],
     ['Accessories', ['Bags', 'Jewelry', 'Hats & headbands', 'Sunglasses']]
   ];
   var SEASONS = ['Spring', 'Summer', 'Fall', 'Winter'];
+  var COLORS = [
+    ['Black', /\bblack\b/], ['White & cream', /\bwhite\b|\bcream\b|ivory|natural/],
+    ['Brown & tan', /\bbrown\b|\btan\b|camel|tortoise/], ['Red & burgundy', /\bred\b|burgundy|maroon/],
+    ['Pink', /pink|fuchsia|magenta|coral/], ['Purple', /purple|lavender|lilac/],
+    ['Blue', /\bblue\b|navy|turquoise|denim|jeans|jorts|wash\b/], ['Green', /green|olive|lime|sage/],
+    ['Yellow', /yellow/], ['Gray & silver', /gr[ae]y|silver|python/], ['Gold', /\bgold\b/],
+    ['Prints & patterns', /floral|leopard|stripe|plaid|camo|paisley|polka|checker|tie-dye|patchwork|print|pinstripe|skull/]
+  ];
+  var LETTER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  function sizeOf(p, cat) {
+    var m = /Size:\s*([^<\n]+)/i.exec(p.html || ''); if (!m) return null;
+    var raw = m[1].trim(), low = raw.toLowerCase();
+    if (/one size/.test(low)) return 'One size';
+    if (cat === 'Shoes') { var n = /(?:women'?s\s*)?(\d+(?:\.5)?)/i.exec(raw); return n ? 'Shoe ' + n[1] : null; }
+    var w = /^w\s*(\d+)/i.exec(raw); if (w) return 'Waist ' + w[1];
+    low = low.replace(/^petite\s+/, '').replace(/\bsmall\b/, 's').replace(/\bmedium\b/, 'm').replace(/\blarge\b/, 'l');
+    var l = /^(xxs|xs|xxl|xl|s|m|l)\b/.exec(low); if (l) return l[1].toUpperCase();
+    var d = /^(\d+)/.exec(low); if (d) return (cat === 'Bottoms' && +d[1] >= 23 ? 'Waist ' : 'Size ') + d[1];
+    return null;
+  }
+  function sizeRank(s) {
+    var i = LETTER.indexOf(s); if (i !== -1) return i;
+    if (s === 'One size') return 50;
+    var n = parseFloat((/[\d.]+/.exec(s) || [999])[0]);
+    return (/^Size/.test(s) ? 100 : /^Waist/.test(s) ? 200 : 300) + n;
+  }
   function has(t, re) { return re.test(t); }
 
   function classify(p) {
@@ -178,8 +228,8 @@
     else if (has(t, /earring|necklace|bracelet|\bring\b|jewel/)) { cat = 'Accessories'; sub = 'Jewelry'; }
     else if (has(t, /sunglass/)) { cat = 'Accessories'; sub = 'Sunglasses'; }
     else if (has(t, /\bhat\b|beanie|headband|\bcap\b/)) { cat = 'Accessories'; sub = 'Hats & headbands'; }
-    else if (has(t, /jacket|\bcoat\b|sherpa|blazer|puffer/)) { cat = 'Outerwear'; sub = 'Jackets & coats'; }
-    else if (has(t, /hoodie|zip[ -]up|sweatshirt/)) { cat = 'Outerwear'; sub = 'Hoodies & zip-ups'; }
+    else if (has(t, /jacket|\bcoat\b|sherpa|blazer|puffer/)) { cat = 'Tops'; sub = 'Outerwear'; }
+    else if (has(t, /hoodie|zip[ -]up|sweatshirt/)) { cat = 'Tops'; sub = 'Outerwear'; }
     else if (has(t, /\bslip\b.*dress|slip dress/)) { cat = 'Dresses'; sub = 'Slip dresses'; }
     else if (has(t, /\bdress\b/)) { cat = 'Dresses'; sub = has(t, /maxi|midi/) ? 'Midi & maxi dresses' : 'Mini dresses'; }
     else if (has(t, /skirt/)) { cat = 'Bottoms'; sub = 'Skirts'; }
@@ -214,10 +264,17 @@
       if (k === 'season') { if (!tagged) { seasons = []; tagged = true; } seasons.push(v); }
     });
     if (!seasons.length) seasons = SEASONS.slice();
-    return { cat: cat, sub: sub, seasons: seasons };
+    var colors = [], ctag = false, size = sizeOf(p, cat);
+    COLORS.forEach(function (c) { if (c[1].test(t)) colors.push(c[0]); });
+    (p.tags || []).forEach(function (tag) {
+      var m = /^(color|size):\s*(.+)$/i.exec(tag); if (!m) return;
+      if (m[1].toLowerCase() === 'size') size = m[2].trim();
+      else { if (!ctag) { colors = []; ctag = true; } colors.push(m[2].trim()); }
+    });
+    return { cat: cat, sub: sub, seasons: seasons, colors: colors, size: size };
   }
 
-  var QUERY = 'query($cursor:String){products(first:250,after:$cursor,sortKey:CREATED_AT,reverse:true){pageInfo{hasNextPage endCursor}edges{node{id title productType tags availableForSale createdAt priceRange{minVariantPrice{amount}}images(first:2){edges{node{url(transform:{maxWidth:700}) altText}}}}}}}';
+  var QUERY = 'query($cursor:String){products(first:250,after:$cursor,sortKey:CREATED_AT,reverse:true){pageInfo{hasNextPage endCursor}edges{node{id title productType tags availableForSale createdAt priceRange{minVariantPrice{amount}}descriptionHtml images(first:2){edges{node{url(transform:{maxWidth:700}) altText}}}}}}}';
   function fetchAll(cursor, acc) {
     return fetch(API, {
       method: 'POST',
@@ -237,7 +294,7 @@
       return list.map(function (n) {
         var imgs = (n.images && n.images.edges ? n.images.edges.map(function (e) { return e.node; }) : []);
         var p = {
-          id: String(n.id).split('/').pop(), title: n.title, productType: n.productType, tags: n.tags || [],
+          id: String(n.id).split('/').pop(), title: n.title, productType: n.productType, tags: n.tags || [], html: n.descriptionHtml || '',
           available: n.availableForSale, created: n.createdAt,
           price: parseFloat(n.priceRange.minVariantPrice.amount),
           img: imgs[0] && imgs[0].url, img2: imgs[1] && imgs[1].url, alt: (imgs[0] && imgs[0].altText) || n.title
@@ -295,7 +352,20 @@
     d.hidden = true; document.querySelector('.fav-scrim').hidden = true;
     var t = document.querySelector('.fav-toggle'); t.setAttribute('aria-expanded', 'false'); t.focus();
   }
+  var navInit = false;
+  function initNav() {
+    if (navInit) return; navInit = true;
+    window.SHB.initCart();
+    var dd = document.querySelector('.nav-dd'); if (!dd) return;
+    var caret = dd.querySelector('.dd-caret');
+    function set(o) { dd.classList.toggle('open', o); caret.setAttribute('aria-expanded', String(o)); }
+    caret.onclick = function (e) { e.stopPropagation(); set(!dd.classList.contains('open')); };
+    document.addEventListener('click', function (e) { if (!dd.contains(e.target)) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+    dd.addEventListener('focusout', function (e) { if (!dd.contains(e.relatedTarget)) set(false); });
+  }
   function initFavs() {
+    initNav();
     var t = document.querySelector('.fav-toggle'); if (!t) return;
     t.onclick = openDrawer;
     document.querySelector('.fav-close').onclick = closeDrawer;
@@ -335,7 +405,13 @@
     items.forEach(function (p) { var li = el('div', { role: 'listitem', 'class': 'carousel-item' }); li.appendChild(card(p)); track.appendChild(li); });
     var prev = el('button', { type: 'button', 'class': 'carousel-arrow prev', 'aria-label': 'Previous ' + label }, '‹');
     var next = el('button', { type: 'button', 'class': 'carousel-arrow next', 'aria-label': 'Next ' + label }, '›');
-    function step(dir) { track.scrollBy({ left: dir * track.clientWidth * 0.9, behavior: 'smooth' }); }
+    function step(dir) {
+      var item = track.querySelector('.carousel-item'); if (!item) return;
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      var w = item.getBoundingClientRect().width + gap;
+      var i = Math.round(track.scrollLeft / w) + dir;
+      track.scrollTo({ left: Math.max(0, i * w), behavior: 'smooth' });
+    }
     prev.onclick = function () { step(-1); }; next.onclick = function () { step(1); };
     function upd() {
       prev.disabled = track.scrollLeft < 4;
@@ -373,11 +449,12 @@
   };
 
   /* ----- shop page ----- */
-  var state = { season: 'All', cat: 'All', sub: null, sort: 'new' };
+  var FRESH = function () { return { season: 'All', cat: 'All', sub: null, sort: 'new', color: '', size: '' }; };
+  var state = FRESH(), collapsed = false;
   var products = [];
   function readUrl() {
     var q = new URLSearchParams(location.search);
-    ['season', 'cat', 'sub', 'sort'].forEach(function (k) { if (q.get(k)) state[k] = q.get(k); });
+    ['season', 'cat', 'sub', 'sort', 'color', 'size'].forEach(function (k) { if (q.get(k)) state[k] = q.get(k); });
   }
   function writeUrl() {
     var q = new URLSearchParams();
@@ -385,21 +462,29 @@
     if (state.cat !== 'All') q.set('cat', state.cat);
     if (state.sub) q.set('sub', state.sub);
     if (state.sort !== 'new') q.set('sort', state.sort);
+    if (state.color) q.set('color', state.color);
+    if (state.size) q.set('size', state.size);
     var s = q.toString(); history.replaceState(null, '', location.pathname + (s ? '?' + s : ''));
   }
-  function seasonOk(p) { return state.season === 'All' || p.c.seasons.indexOf(state.season) !== -1; }
+  function seasonOk(p) {
+    return (state.season === 'All' || p.c.seasons.indexOf(state.season) !== -1) &&
+      (!state.color || p.c.colors.indexOf(state.color) !== -1) && (!state.size || p.c.size === state.size);
+  }
   function count(fn) { return products.filter(function (p) { return seasonOk(p) && fn(p); }).length; }
   function renderControls() {
     var tree = document.getElementById('catTree'); tree.innerHTML = '';
     var allLi = el('li'), allB = el('button', { type: 'button', 'class': 'cat-btn', 'aria-pressed': String(state.cat === 'All') }, 'All pieces');
     allB.appendChild(el('span', { 'class': 'count' }, String(count(function () { return true; }))));
-    allB.onclick = function () { state.cat = 'All'; state.sub = null; update(); };
+    allB.onclick = function () { state.cat = 'All'; state.sub = null; collapsed = false; update(); };
     allLi.appendChild(allB); tree.appendChild(allLi);
     TREE.forEach(function (row) {
-      var cat = row[0], open = state.cat === cat, li = el('li');
+      var cat = row[0], open = state.cat === cat && !collapsed, li = el('li');
       var b = el('button', { type: 'button', 'class': 'cat-btn', 'aria-pressed': String(open && !state.sub), 'aria-expanded': String(open) }, cat);
       b.appendChild(el('span', { 'class': 'count' }, String(count(function (p) { return p.c.cat === cat; }))));
-      b.onclick = function () { state.cat = cat; state.sub = null; update(); };
+      b.onclick = function () {
+        if (state.cat === cat) collapsed = !collapsed; else { state.cat = cat; state.sub = null; collapsed = false; }
+        update();
+      };
       li.appendChild(b);
       if (open) {
         var ul = el('ul', { 'class': 'sub-list' });
@@ -419,20 +504,51 @@
       tree.appendChild(li);
     });
     document.getElementById('sortSelect').value = state.sort;
+    fillSelect('colorSelect', 'All colors', COLORS.map(function (c) { return c[0]; }), 'color', function (p, v) { return p.c.colors.indexOf(v) !== -1; });
+    var sizes = {}; products.forEach(function (p) { if (p.c.size) sizes[p.c.size] = 1; });
+    fillSelect('sizeSelect', 'All sizes', Object.keys(sizes).sort(function (a, b) { return sizeRank(a) - sizeRank(b); }), 'size', function (p, v) { return p.c.size === v; });
+  }
+  function catOk(p) { return (state.cat === 'All' || p.c.cat === state.cat) && (!state.sub || p.c.sub === state.sub); }
+  function fillSelect(id, allLabel, values, key, test) {
+    var sel = document.getElementById(id); sel.innerHTML = '';
+    sel.appendChild(el('option', { value: '' }, allLabel));
+    var keep = state[key]; state[key] = '';
+    values.forEach(function (v) {
+      var n = products.filter(function (p) { return seasonOk(p) && catOk(p) && test(p, v); }).length;
+      if (!n && v !== keep) return;
+      sel.appendChild(el('option', { value: v }, v + ' (' + n + ')'));
+    });
+    state[key] = keep; sel.value = keep;
   }
   function renderGrid() {
     var list = products.filter(function (p) {
-      return seasonOk(p) && (state.cat === 'All' || p.c.cat === state.cat) && (!state.sub || p.c.sub === state.sub);
+      return seasonOk(p) && catOk(p);
     });
     if (state.sort === 'low') list.sort(function (a, b) { return a.price - b.price; });
     else if (state.sort === 'high') list.sort(function (a, b) { return b.price - a.price; });
     else list.sort(function (a, b) { return a.created < b.created ? 1 : -1; });
     var grid = document.getElementById('productGrid'); grid.innerHTML = '';
     document.getElementById('resultCount').textContent = list.length + (list.length === 1 ? ' piece' : ' pieces');
-    var bits = []; if (state.season !== 'All') bits.push(state.season);
-    if (state.sub) bits.push(state.sub); else if (state.cat !== 'All') bits.push(state.cat);
-    document.getElementById('activeFilters').textContent = bits.length ? ' · ' + bits.join(' · ') : '';
-    if (!list.length) { grid.appendChild(el('p', { 'class': 'empty' }, 'Nothing here right now. Request a style bundle and I’ll find it for you.')); return; }
+    var af = document.getElementById('activeFilters'); af.innerHTML = '';
+    var chips = [];
+    if (state.season !== 'All') chips.push([state.season, function () { state.season = 'All'; }]);
+    if (state.sub) chips.push([state.sub, function () { state.sub = null; }]);
+    else if (state.cat !== 'All') chips.push([state.cat, function () { state.cat = 'All'; collapsed = false; }]);
+    if (state.color) chips.push([state.color, function () { state.color = ''; }]);
+    if (state.size) chips.push([state.size, function () { state.size = ''; }]);
+    chips.forEach(function (c) {
+      var b = el('button', { type: 'button', 'class': 'filter-chip', 'aria-label': 'Remove filter: ' + c[0] });
+      b.appendChild(el('span', {}, c[0])); b.appendChild(el('span', { 'class': 'chip-x', 'aria-hidden': 'true' }, '×'));
+      b.onclick = function () { c[1](); update(); };
+      af.appendChild(b);
+    });
+    if (!list.length) {
+      var box = el('div', { 'class': 'empty empty-search' });
+      box.appendChild(el('h2', {}, 'Can’t find what you’re looking for?'));
+      box.appendChild(el('p', {}, 'Let me search for you! Tell me what you want and I’ll thrift it for you in a style bundle.'));
+      var a = el('a', { 'class': 'btn btn-ink', href: 'bundles.html' }, 'Get a style bundle'); box.appendChild(a);
+      grid.appendChild(box); return;
+    }
     list.forEach(function (p) { grid.appendChild(card(p)); });
     syncFavUI();
   }
@@ -440,7 +556,9 @@
   window.SHB.mountShop = function () {
     initFavs(); readUrl();
     document.getElementById('sortSelect').onchange = function (e) { state.sort = e.target.value; update(); };
-    document.getElementById('clearFilters').onclick = function () { state = { season: 'All', cat: 'All', sub: null, sort: 'new' }; update(); };
+    document.getElementById('colorSelect').onchange = function (e) { state.color = e.target.value; update(); };
+    document.getElementById('sizeSelect').onchange = function (e) { state.size = e.target.value; update(); };
+    document.getElementById('clearFilters').onclick = function () { state = FRESH(); collapsed = false; update(); };
     var tog = document.querySelector('.filters-toggle');
     tog.onclick = function () { var o = document.querySelector('.filters').classList.toggle('open'); tog.setAttribute('aria-expanded', String(o)); };
     loadProducts().then(function (list) { products = list; update(); })

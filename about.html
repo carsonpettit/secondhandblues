@@ -13,17 +13,26 @@
 <body class="about">
 <header class="site-header">
   <div class="wrap header-bar">
-    <a class="logo" href="index.html"><img src="logo-line.png" alt="Second Hand Blues home" width="2400" height="277"></a>
+    <a class="logo" href="index.html"><img src="logo-line.png" alt="Second Hand Blues home" width="2400" height="268"></a>
     <nav class="main-nav" aria-label="Main">
       <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
+      <div class="nav-dd">
+        <a href="shop.html">Shop</a><button class="dd-caret" type="button" aria-expanded="false" aria-controls="shopMenu" aria-label="Show shop categories"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
+        <div class="dd-panel" id="shopMenu"><div class="dd-inner"><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Tops">Tops</a><ul><li><a href="shop.html?cat=Tops&amp;sub=Tank%20tops%20%26%20camis">Tank tops &amp; camis</a></li><li><a href="shop.html?cat=Tops&amp;sub=Tees">Tees</a></li><li><a href="shop.html?cat=Tops&amp;sub=Long%20sleeves">Long sleeves</a></li><li><a href="shop.html?cat=Tops&amp;sub=Sweaters%20%26%20cardigans">Sweaters &amp; cardigans</a></li><li><a href="shop.html?cat=Tops&amp;sub=Blouses%20%26%20tops">Blouses &amp; tops</a></li><li><a href="shop.html?cat=Tops&amp;sub=Bodysuits">Bodysuits</a></li><li><a href="shop.html?cat=Tops&amp;sub=Outerwear">Outerwear</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Bottoms">Bottoms</a><ul><li><a href="shop.html?cat=Bottoms&amp;sub=Jeans">Jeans</a></li><li><a href="shop.html?cat=Bottoms&amp;sub=Shorts">Shorts</a></li><li><a href="shop.html?cat=Bottoms&amp;sub=Skirts">Skirts</a></li><li><a href="shop.html?cat=Bottoms&amp;sub=Pants">Pants</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Dresses">Dresses</a><ul><li><a href="shop.html?cat=Dresses&amp;sub=Mini%20dresses">Mini dresses</a></li><li><a href="shop.html?cat=Dresses&amp;sub=Midi%20%26%20maxi%20dresses">Midi &amp; maxi dresses</a></li><li><a href="shop.html?cat=Dresses&amp;sub=Slip%20dresses">Slip dresses</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Shoes">Shoes</a><ul><li><a href="shop.html?cat=Shoes&amp;sub=Sneakers">Sneakers</a></li><li><a href="shop.html?cat=Shoes&amp;sub=Flats">Flats</a></li><li><a href="shop.html?cat=Shoes&amp;sub=Boots">Boots</a></li><li><a href="shop.html?cat=Shoes&amp;sub=Sandals%20%26%20heels">Sandals &amp; heels</a></li></ul></div><div class="dd-col"><a class="dd-cat" href="shop.html?cat=Accessories">Accessories</a><ul><li><a href="shop.html?cat=Accessories&amp;sub=Bags">Bags</a></li><li><a href="shop.html?cat=Accessories&amp;sub=Jewelry">Jewelry</a></li><li><a href="shop.html?cat=Accessories&amp;sub=Hats%20%26%20headbands">Hats &amp; headbands</a></li><li><a href="shop.html?cat=Accessories&amp;sub=Sunglasses">Sunglasses</a></li></ul></div></div></div>
+      </div>
       <a href="bundles.html">Style bundles</a>
       <a href="about.html" class="active" aria-current="page">About</a>
     </nav>
-    <button class="fav-toggle" type="button" aria-label="Favorites" aria-controls="favDrawer" aria-expanded="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.1A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1z"/></svg>
-      <span class="fav-count" hidden>0</span>
-    </button>
+    <div class="header-icons">
+      <button class="fav-toggle icon-btn" type="button" aria-label="Favorites" aria-controls="favDrawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.1A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1z"/></svg>
+        <span class="fav-count" hidden>0</span>
+      </button>
+      <button class="cart-toggle icon-btn" type="button" aria-label="Shopping bag">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12.5H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        <span class="cart-count" hidden>0</span>
+      </button>
+    </div>
   </div>
 </header>
 <aside id="favDrawer" class="fav-drawer" aria-label="Favorites" hidden>
@@ -66,12 +75,11 @@
   <div class="wrap">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="logo-line.png" alt="Second Hand Blues" width="2400" height="277">
+        <img src="logo-line.png" alt="Second Hand Blues" width="2400" height="268">
         <p>Curated vintage and thrifted clothing and personal style bundles, hand-picked since 2024.</p>
       </div>
       <nav class="footer-col" aria-label="Site">
-        <strong>Shop</strong>
-        <a href="shop.html">Shop the collection</a>
+        <a href="shop.html">Shop</a>
         <a href="bundles.html">Style bundles</a>
         <a href="about.html">About</a>
       </nav>
